@@ -1,0 +1,146 @@
+#include <iostream>
+using namespace std;
+struct node{
+	int data;
+	node*parent;
+	node*left;
+	node*right;
+	node(){
+		parent = NULL;
+		left = NULL;
+		right = NULL;
+	}
+};
+class binarytree{
+		public:
+	node*root;
+	binarytree(){
+		root = NULL;
+	}
+	void insert(int val){
+			node*temp = new node;
+				node*store = new node;
+				temp->data = val;
+				temp->parent = NULL;
+				temp->right=NULL;
+				temp->left=NULL;
+			if(root==NULL){
+				root = temp;
+			}
+			else{
+				store = root;
+				while(store->left!=NULL&&store->right!=NULL){
+					if(temp->data<store->data){
+						store= store->left;
+					}
+					if(temp->data>store->data){
+						store = store->right;
+					}
+				}
+				temp->parent = store;
+				if(val<store->data){
+					store->left = temp;
+				}
+				else{
+					store->right = temp;
+				}
+			}
+		
+			
+	}
+	
+void display(node *temp)
+{
+	node* curr=temp;
+	if(curr)
+	{
+		display(curr->left);
+		cout<<curr->data<<" "<<endl;
+		display(curr->right);
+	}
+}
+void search(int key){
+	node*temp = new node;
+	temp=root;
+	bool find = false;
+	while(find!=true && temp!=NULL){
+		if(key == temp->data){
+			cout<<"The key is found! Blessed be the people of cottoncandy land!\n";
+			find = true;
+		}
+		if(key<temp->data){
+			temp=temp->left;
+		}
+		if(key>temp->data){
+			temp=temp->right;
+		}
+		
+	}
+	if(find==false){
+		cout<<"Oh no! The key could not be found!\n";
+	}
+	
+}
+void deletenode(int key){
+	node*temp = new node;
+	node*store1 = new node;
+	node*store2 = new node;
+	node*store3 = new node;
+	temp = root;
+	bool find = false;
+	while(find!=true&&temp!=NULL){
+		if(key==temp->data){
+			find = true;
+		}
+		if(key<temp->data){
+			temp=temp->left;
+		}
+		if(key>temp->data){
+			temp=temp->right;
+		}
+	}
+	if(find==true){
+		if(temp->right==NULL && temp->left==NULL){
+			delete temp;
+		}
+		if(temp->right==NULL && temp->left!=NULL){
+			store1 = temp->left;
+			store2 = temp->parent;
+			store1->parent = store2;
+			store2->left = store1;
+			delete temp;
+		}
+		if(temp->right!=NULL&&temp->left==NULL){
+			store1 = temp->right;
+			store2 = temp->parent;
+			store1->parent = store2;
+			store2->right = store1;
+			delete temp;
+		}
+		if(temp->right!=NULL && temp->left!=NULL){
+			store1 = temp->left;
+			store2 = temp->parent;
+			store3 = temp->right;
+			store1->parent = store2;
+			store2->left = store1;
+			store1->right = store3;
+			delete temp;
+		}
+	}
+	else
+	cout<<"Key not found\n";
+}
+	};
+int main(){
+	binarytree asd;
+	asd.insert(10);
+	asd.insert(8);
+	asd.insert(11);
+	asd.insert(2);
+	asd.insert(12);
+	node*temp = ob.root;
+	asd.display(temp);
+	asd.search(9);
+	asd.deletenode(8);
+	asd.display(temp)
+}
